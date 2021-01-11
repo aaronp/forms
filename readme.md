@@ -1,25 +1,16 @@
-# Forms
+# forms
 
-A small project for creating forms
+A new Flutter project.
 
-# Design
+## Getting Started
 
-Form:
-  title : string
-  about : string
-  questions : Question[]
+This project is a starting point for a Flutter application.
 
-Question:
-  question : string
-  values : Value[]
-  type : [ slider, single, multiple, text]
-  required : bool
-  weight : double
+A few resources to get you started if this is your first Flutter project:
 
-Value : 
-  value : [ String | Double | Boolean ]
-  score : Int
-  
-# Features:
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-Save 
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
