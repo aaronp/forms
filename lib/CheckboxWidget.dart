@@ -6,90 +6,83 @@ class CheckboxWidget extends StatefulWidget {
 }
 
 class _CheckboxWidgetState extends State<CheckboxWidget> {
-  var _from = 1;
-  var _to = 7;
-
-  final _fromTextController = TextEditingController();
-  final _toTextController = TextEditingController();
+  List _choices =
+      List.of(<TextEditingController>[TextEditingController()], growable: true);
 
   @override
   void dispose() {
     super.dispose();
-    _fromTextController.dispose();
-    _toTextController.dispose();
+    _choices.forEach((element) {
+      element.dispose();
+    });
+  }
+
+  _updateText(int index, TextEditingController controller) {
+    return () {
+      if (index == _choices.length - 1) {
+        // if (controller.text.isNotEmpty) {
+        //
+        // }
+        print("Updated $index: ${controller.text}");
+        setState(() {
+          _choices.add(TextEditingController());
+        });
+      } else if (controller.text.isEmpty) {
+        var i = _choices.length - 1;
+        while (i > index) {
+          print("Checking $i / $index");
+          if (_choices[i].text.isEmpty) {
+            setState(() {
+              _choices.removeAt(i);
+            });
+          }
+          i = i - 1;
+        }
+      } else {
+        var i = index;
+        while (i >= 0) {
+          if (_choices[i].text.isEmpty) {
+            setState(() {
+              _choices.removeAt(i);
+            });
+          }
+          i = i - 1;
+        }
+      }
+      return "";
+    };
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(children: [fromChoice(), Text("to"), toChoice()]),
-        Row(children: [Text("$_from : "), fromText()]),
-        Row(children: [Text("$_to : "), toText()])
-      ],
-    );
-  }
+    return Container(
+      width: 200,
+      height: 200,
+      child: ListView.builder(
+          itemCount: _choices.length,
+          itemBuilder: (BuildContext context, int index) {
+            TextEditingController controller = _choices[index];
 
-  Widget fromText() {
-    return TextField(
-      controller: _fromTextController,
-      maxLines: null,
-      decoration: InputDecoration(
-          border: InputBorder.none, hintText: 'Label (optional)'),
-    );
-  }
+            final callback = _updateText(index, controller);
+            controller.addListener(callback);
 
-  Widget toText() {
-    return TextField(
-      controller: _toTextController,
-      maxLines: null,
-      decoration: InputDecoration(
-          border: InputBorder.none, hintText: 'Label (optional)'),
-    );
-  }
+            // controller.ad
+            // _printLatestValue() {
+            //   print("Second text field: ${myController.text}");
+            // }
 
-  Widget fromChoice() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: DropdownButton<int>(
-          value: _from,
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (int newValue) {
-            setState(() {
-              _from = newValue;
-            });
-          },
-          items: [0, 1].map<DropdownMenuItem<int>>((int value) {
-            return DropdownMenuItem<int>(
-              value: value,
-              child: Text("$value"),
+            final txt = TextField(
+              controller: controller,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                  border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.orange)),
+                  hintText: '(Choice $index)'),
             );
-          }).toList()),
-    );
-  }
 
-  Widget toChoice() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: DropdownButton<int>(
-          value: _to,
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (int newValue) {
-            setState(() => _to = newValue);
-          },
-          items: [2, 3, 4, 5, 6, 7, 8, 9, 10]
-              .map<DropdownMenuItem<int>>((int value) {
-            return DropdownMenuItem<int>(
-              value: value,
-              child: Text("$value"),
-            );
-          }).toList()),
+            return txt;
+          }),
     );
   }
 }

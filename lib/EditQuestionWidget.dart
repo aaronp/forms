@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'CheckboxWidget.dart';
 import 'RangeWidget.dart';
 import 'model.dart';
 
@@ -39,7 +40,7 @@ class _EditQuestionWidgetState extends State<EditQuestionWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [questionTextWidget(), questionTypeWidget()],
           ),
-          answerTypeWidget()
+          Align(alignment: Alignment.topLeft, child: answerTypeWidget())
         ],
       ),
     );
@@ -47,15 +48,17 @@ class _EditQuestionWidgetState extends State<EditQuestionWidget> {
 
   Widget answerTypeWidget() {
     if (_questionType == Kinds.Text) {
-      return Text("(answer text goes here)");
+      return Align(
+          alignment: Alignment.topLeft, child: Text("(answer text goes here)"));
     } else if (_questionType == Kinds.Paragraph) {
-      return Text("(answer text goes here)");
+      return Align(
+          alignment: Alignment.topLeft, child: Text("(answer text goes here)"));
     } else if (_questionType == Kinds.Range) {
       return RangeWidget();
     } else if (_questionType == Kinds.MultipleChoice) {
-      return Text("Choice");
+      return CheckboxWidget();
     } else if (_questionType == Kinds.Checkbox) {
-      return Text("Choice");
+      return CheckboxWidget();
     } else {
       return Text("Choice");
     }
@@ -65,7 +68,7 @@ class _EditQuestionWidgetState extends State<EditQuestionWidget> {
     return Container(
         decoration: BoxDecoration(color: Colors.grey[900]),
         // margin: EdgeInsets.all(8),
-        padding: EdgeInsets.fromLTRB(8,0,8,0),
+        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
         constraints: BoxConstraints(
           maxWidth: 200,
           maxHeight: 300,
