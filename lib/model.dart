@@ -29,9 +29,9 @@ class Kinds {
   static const String Paragraph = "paragraph";
   static const String MultipleChoice = "multiple choice";
   static const String Checkbox = "checkbox";
-  static const String Slider = "slider";
+  static const String Range = "range";
   static List<String> list() {
-    return [Text, Paragraph, MultipleChoice, Checkbox, Slider];
+    return [Text, Paragraph, MultipleChoice, Checkbox, Range];
   }
 }
 class Question {

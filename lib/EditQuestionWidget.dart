@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'RangeWidget.dart';
 import 'model.dart';
 
 class EditQuestionWidget extends StatefulWidget {
@@ -44,12 +45,16 @@ class _EditQuestionWidgetState extends State<EditQuestionWidget> {
     );
   }
 
-  Text answerTypeWidget() {
+  Widget answerTypeWidget() {
     if (_questionType == Kinds.Text) {
-      return Text("Choice");
+      return Text("(answer text goes here)");
     } else if (_questionType == Kinds.Paragraph) {
+      return Text("(answer text goes here)");
+    } else if (_questionType == Kinds.Range) {
+      return RangeWidget();
+    } else if (_questionType == Kinds.MultipleChoice) {
       return Text("Choice");
-    } else if (_questionType == Kinds.Slider) {
+    } else if (_questionType == Kinds.Checkbox) {
       return Text("Choice");
     } else {
       return Text("Choice");
@@ -58,7 +63,9 @@ class _EditQuestionWidgetState extends State<EditQuestionWidget> {
 
   Container questionTextWidget() {
     return Container(
-        decoration: BoxDecoration(color: Colors.grey),
+        decoration: BoxDecoration(color: Colors.grey[900]),
+        // margin: EdgeInsets.all(8),
+        padding: EdgeInsets.fromLTRB(8,0,8,0),
         constraints: BoxConstraints(
           maxWidth: 200,
           maxHeight: 300,
