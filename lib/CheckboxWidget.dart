@@ -20,15 +20,11 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
   _updateText(int index, TextEditingController controller) {
     return () {
       if (index == _choices.length - 1) {
-        // if (controller.text.isNotEmpty) {
-        //
-        // }
-        print("Updated $index: ${controller.text}");
         setState(() {
           _choices.add(TextEditingController());
         });
       } else if (controller.text.isEmpty) {
-        var i = _choices.length - 1;
+        var i = _choices.length - 2;
         while (i > index) {
           print("Checking $i / $index");
           if (_choices[i].text.isEmpty) {
@@ -57,7 +53,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      height: 200,
+      height: 600,
       child: ListView.builder(
           itemCount: _choices.length,
           itemBuilder: (BuildContext context, int index) {
@@ -65,11 +61,6 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
 
             final callback = _updateText(index, controller);
             controller.addListener(callback);
-
-            // controller.ad
-            // _printLatestValue() {
-            //   print("Second text field: ${myController.text}");
-            // }
 
             final txt = TextField(
               controller: controller,
